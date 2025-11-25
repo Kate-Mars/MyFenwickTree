@@ -1,7 +1,6 @@
 package ds;
 /**
  * Класс FenwickTree
- *
  * Методы:
  *  - void build(int[] arr)
  *  - void update(int index, int delta)
