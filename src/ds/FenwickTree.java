@@ -7,6 +7,7 @@ package ds;
  *  - void update(int index, int delta)
  *  - int prefixSum(int index)
  *  - int rangeSum(int left, int right)
+ *  - int lowerBound(int target)
  */
 public class FenwickTree {
 
@@ -95,6 +96,32 @@ public class FenwickTree {
             tree[pos] += delta;
             pos += pos & -pos;
         }
+    }
+
+    public int lowerBound(int target) {
+        if (n == 0) return -1;
+
+        if (target <= 0) { return 0; }
+
+        int total = prefixSum(n - 1);
+        if (target > total) { return -1; }
+
+        int idx = 0;
+        int bit = Integer.highestOneBit(n);
+        int sum = 0;
+
+        while (bit != 0) {
+            int next = idx + bit;
+            if (next <= n && sum + tree[next] < target) {
+                sum += tree[next];
+                idx = next;
+            }
+            bit >>= 1;
+        }
+
+        int arrayIndex = idx - 1;
+        if (arrayIndex < 0) arrayIndex = 0;
+        return arrayIndex;
     }
 
     // методы для визуализации
